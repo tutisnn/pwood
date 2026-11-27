@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Turkish Plywood | Güven Demir · Dijital Satış Temsilcisi</title>
+<title>Turkish Plywood | Export Assistant</title>
 <style>
   :root{
     --accent:#c8862f; --accent-dark:#8f5a17; --on-accent:#ffffff;
@@ -56,6 +56,13 @@
   .inbar textarea:focus{border-color:var(--accent)}
   .send{width:42px;height:42px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:18px;cursor:pointer;flex:0 0 auto}
   .send:disabled{opacity:.45;cursor:default}
+  .pdfcard{display:flex;align-items:center;gap:11px;max-width:82%;padding:10px 12px;background:var(--bot);border:1px solid var(--line);border-radius:14px;border-bottom-left-radius:5px;text-decoration:none;color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.07)}
+  .pdfcard:hover{background:#fbf3e7}
+  .pdfico{flex:0 0 auto;width:40px;height:46px;border-radius:6px;background:#e5484d;color:#fff;font-weight:800;font-size:12px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;letter-spacing:.3px}
+  .pdfinfo{min-width:0}
+  .pdfname{font-size:13.5px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+  .pdfmeta{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .pdfopen{font-size:12px;color:var(--accent-dark);font-weight:700;margin-top:3px}
   .foot{text-align:center;font-size:10.5px;color:var(--muted);padding:5px 0 8px;background:var(--card)}
 </style>
 </head>
@@ -64,32 +71,29 @@
   <div class="head">
     <div class="avatar">🪵</div>
     <div class="info">
-      <div class="name"><b>TURKISH PLYWOOD</b> · Güven Demir</div>
-      <div class="sub"><span class="dot"></span> Dijital satış temsilcisi · dilinizde yanıt verir</div>
+      <div class="name"><b>TURKISH PLYWOOD</b> · Mira</div>
+      <div class="sub"><span class="dot"></span> Export assistant · replies in your language</div>
     </div>
-    <button class="hbtn" id="resetBtn" title="Yeni sohbet">↺</button>
+    <button class="hbtn" id="resetBtn" title="New chat">↺</button>
   </div>
   <div class="msgs" id="msgs"></div>
   <div class="inbar">
-    <textarea id="inp" rows="1" placeholder="Mesajınızı yazın…"></textarea>
-    <button class="send" id="sendBtn" aria-label="Gönder">➤</button>
+    <textarea id="inp" rows="1" placeholder="Type your message…"></textarea>
+    <button class="send" id="sendBtn" aria-label="Send">➤</button>
   </div>
-  <div class="foot">Turkish Plywood dijital satış asistanı · demo</div>
+  <div class="foot">Turkish Plywood Production Consortium digital assistant · demo</div>
 </div>
 
 <script>
 /* ==================== AYAR ==================== */
 const CONFIG = {
-  /* Canlı (production) webhook adresi — workflow "Turkish Plywood Demo Güven Demir" */
-  webhook: "https://n8n.closerone.ai/webhook/turkishplywood-demo-webhook/turkishplywood-demo",
+  webhook: "https://n8n.closerone.ai/webhook/turkishplywood-demo",
   leadKarti: true,
-  hizli: [
-    "Peraply 18 mm filmli plywood fiyatı nedir?",
-    "EKS Birch 18 mm fiyatı, 20 palet, Ankara",
-    "Segheza 18 mm film faced price, delivery to Germany",
-    "Dorse zemini için kaydırmaz plywood",
-    "Kataloğunuzu gönderir misiniz?"
-  ]
+  dosyalar: {
+    katalog_tr: { ad: "Turkish Plywood Katalog TR_2026_K.pdf", url: "katalog/Turkish-Plywood-Katalog-TR-2026.pdf", boyut: "2.7 MB", sayfa: 24 },
+    katalog_en: { ad: "Turkish Plywood Catalogue EN_EUR_2026.pdf", url: "katalog/Turkish-Plywood-Catalogue-EN-2026.pdf", boyut: "5.3 MB", sayfa: 24 }
+  },
+  hizli: ["Price of birch film faced 18 mm?", "Anti-slip plywood for trailer floors", "Which plywood for furniture?", "Kavak kontrplak fiyatı nedir?", "أريد عرض سعر لخشب البتولا"]
 };
 /* =============================================== */
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
@@ -126,7 +130,7 @@ function addBubble(text, who){
 }
 function addChips(){
   const w = document.createElement('div'); w.className='welcome'; w.id='welcomeRow';
-  w.textContent = 'Ürünler, ölçüler veya fiyat hakkında sorun ya da teklif isteyin.';
+  w.textContent = 'Ask about products, specs or prices — or request a quote.';
   msgs.appendChild(w);
   if(!CONFIG.hizli || !CONFIG.hizli.length) return;
   const row = document.createElement('div'); row.className='row sys'; row.id='chipRow';
@@ -139,38 +143,58 @@ function addLeadCard(lead){
   const row = document.createElement('div'); row.className = 'row sys';
   const box = document.createElement('div'); box.className = 'lead';
   const t = document.createElement('div'); t.className = 't';
-  t.textContent = /DESTEK/i.test(lead.tip||'') ? '📋 Destek ekibine iletildi' : '📋 Satış ekibine iletildi';
+  t.textContent = /DESTEK/i.test(lead.tip||'') ? '📋 Sent to support team' : '📋 Sent to export team';
   box.appendChild(t);
   const dl = document.createElement('dl');
-  [['Telefon','tel'],['Ad','ad'],['Firma','firma'],['Ülke','ulke'],['E-posta','eposta'],['Ürün','urun'],['Detay','detay'],['Miktar','miktar'],['Teslimat','teslimat'],['Ödeme','odeme'],['Zaman','zaman'],['Dil','dil'],['Müşteri','tip'],['Not','not']].forEach(([et,k])=>{
+  [['Phone','tel'],['Name','ad'],['Company','firma'],['Country','ulke'],['E-mail','eposta'],['Product','urun'],['Specs','detay'],['Quantity','miktar'],['Delivery','teslimat'],['Timing','zaman'],['Language','dil'],['Lead','tip'],['Note','not']].forEach(([et,k])=>{
     const v = lead[k]; if(!v) return;
     const dt = document.createElement('dt'); dt.textContent = et;
     const dd = document.createElement('dd');
     if(k==='tip'){
       const s=document.createElement('span');
       const tip = /SICAK/i.test(v)?'sicak':/DESTEK/i.test(v)?'destek':'soguk';
-      s.className='badge '+tip; s.textContent = tip==='sicak'?'SICAK':tip==='destek'?'DESTEK':'SOĞUK';
+      s.className='badge '+tip; s.textContent = tip==='sicak'?'HOT':tip==='destek'?'SUPPORT':'COLD';
       dd.appendChild(s);
     } else dd.textContent = v;
     dl.appendChild(dt); dl.appendChild(dd);
   });
   box.appendChild(dl);
   const f = document.createElement('div'); f.className='f';
-  f.textContent = 'Demo görünümü — canlı sistemde bu bilgiler CRM\'e kart olarak düşer ve satış ekibine bildirim gider.';
+  f.textContent = 'Demo view — in the live system this lands in the CRM as a deal card and the export team is notified.';
   box.appendChild(f); row.appendChild(box); msgs.appendChild(row); scrollDown();
+}
+function addPdfCard(key){
+  const d = CONFIG.dosyalar && CONFIG.dosyalar[key]; if(!d) return;
+  const row = document.createElement('div'); row.className = 'row bot';
+  const a = document.createElement('a'); a.className = 'pdfcard'; a.href = d.url; a.target = '_blank'; a.rel = 'noopener';
+  const ico = document.createElement('div'); ico.className = 'pdfico'; ico.textContent = 'PDF';
+  const info = document.createElement('div'); info.className = 'pdfinfo';
+  const n = document.createElement('div'); n.className = 'pdfname'; n.textContent = d.ad;
+  const m = document.createElement('div'); m.className = 'pdfmeta'; m.textContent = d.sayfa + ' pages · ' + d.boyut + ' · PDF';
+  const o = document.createElement('div'); o.className = 'pdfopen'; o.textContent = 'Open PDF';
+  info.appendChild(n); info.appendChild(m); info.appendChild(o);
+  a.appendChild(ico); a.appendChild(info); row.appendChild(a); msgs.appendChild(row); scrollDown();
 }
 function showTyping(){ hideTyping(); const row=document.createElement('div'); row.className='row bot'; row.id='typingRow';
   const t=document.createElement('div'); t.className='bubble typing'; t.innerHTML='<span></span><span></span><span></span>';
   row.appendChild(t); msgs.appendChild(row); scrollDown(); }
 function hideTyping(){ const r=document.getElementById('typingRow'); if(r) r.remove(); }
 
-function renderCevap(raw, lead){
+const DRIVE_KATALOG = /https?:\/\/drive\.google\.com\/file\/d\/16IgUhWU9eIAh13txWyuSdbTlOVxhYNv5[^\s]*/gi;
+function renderCevap(raw, lead, dosyalar){
   let s = String(raw||'').replace(/\[LEAD\][^\n\r]*/gi,'').trim();
-  /* [BÖL] ile ayrılan balonlar; en fazla 5 balon (fazlası kesilmesin diye) */
-  const bubbles = s ? s.split(/\[B[ÖO]L\]/i).map(x=>x.trim()).filter(Boolean).slice(0,5) : [];
+  dosyalar = Array.isArray(dosyalar) ? dosyalar.filter(k=>CONFIG.dosyalar && CONFIG.dosyalar[k]) : [];
+  if(!dosyalar.length && DRIVE_KATALOG.test(s)) dosyalar = ['katalog_tr'];
+  DRIVE_KATALOG.lastIndex = 0;
+  if(dosyalar.length) s = s.replace(DRIVE_KATALOG,'').replace(/[ \t]+\n/g,'\n').replace(/[ \t]+$/gm,'').trim();
+  const bubbles = s ? s.split(/\[B[ÖO]L\]/i).map(x=>x.trim()).filter(Boolean).slice(0,3) : [];
   let i=0;
   (function next(){
-    if(i>=bubbles.length){ if(lead) setTimeout(()=>addLeadCard(lead), bubbles.length?500:0); return; }
+    if(i>=bubbles.length){
+      dosyalar.forEach(k=>addPdfCard(k));
+      if(lead) setTimeout(()=>addLeadCard(lead), bubbles.length?500:0);
+      return;
+    }
     if(i>0) showTyping();
     setTimeout(()=>{ hideTyping(); addBubble(bubbles[i],'bot'); i++; next(); }, i===0?0:650);
   })();
@@ -183,11 +207,11 @@ async function send(text){
   try{
     const r = await fetch(CONFIG.webhook,{method:'POST',headers:{'Content-Type':'text/plain'},body});
     const txt = await r.text(); hideTyping();
-    let cevap=txt, lead=null;
-    try{ const j=JSON.parse(txt); cevap=j.output||j.cevap||j.response||j.reply||j.yanit||j.mesaj||''; lead=j.lead||null; }catch(e){}
-    renderCevap(cevap, lead);
+    let cevap=txt, lead=null, dosyalar=[];
+    try{ const j=JSON.parse(txt); cevap=j.output||j.cevap||j.response||j.reply||j.yanit||j.mesaj||''; lead=j.lead||null; dosyalar=j.dosyalar||[]; }catch(e){}
+    renderCevap(cevap, lead, dosyalar);
   }catch(e){
-    hideTyping(); addBubble("Bağlantı kurulamadı. Lütfen kısa bir süre sonra tekrar deneyin ya da export@turkishplywood.com / WhatsApp +90 552 506 92 40 üzerinden bize ulaşın.",'bot');
+    hideTyping(); addBubble("Connection failed. Please try again shortly, or reach us at export@turkishplywood.com / WhatsApp +90 552 506 92 40.",'bot');
   }finally{ busy=false; sendBtn.disabled=false; inp.focus(); }
 }
 document.getElementById('resetBtn').onclick=()=>{ if(busy) return; konusmaId=yeniId(); lsSet('tp_kid',konusmaId); msgs.innerHTML=''; addChips(); inp.focus(); };
