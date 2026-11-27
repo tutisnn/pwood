@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Turkish Plywood | Güven Demir · Dijital Satış Temsilcisi</title>
+<style>
+  :root{
+    --accent:#c8862f; --accent-dark:#8f5a17; --on-accent:#ffffff;
+    --dark:#2b1d12; --dark2:#150d07;
+    --bg:#f6f1ea; --card:#ffffff; --bot:#ffffff;
+    --text:#2a2118; --muted:#7c7064; --line:#e9e0d4;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%;margin:0}
+  body{font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:
+    repeating-linear-gradient(92deg,rgba(255,255,255,.025) 0 2px,transparent 2px 9px),
+    linear-gradient(160deg,#5a3d22 0%,#1a110a 100%);color:var(--text);display:flex;align-items:center;justify-content:center}
+  .wrap{width:100%;max-width:460px;height:100dvh;max-height:860px;background:var(--card);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+  @media(min-width:520px){.wrap{border-radius:18px;height:92vh}}
+  .head{background:linear-gradient(135deg,var(--dark),var(--dark2));color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;border-bottom:3px solid var(--accent)}
+  .avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e0a95a,#a8691f);display:flex;align-items:center;justify-content:center;font-size:21px;flex:0 0 auto;box-shadow:0 0 0 2px rgba(255,255,255,.18)}
+  .info{flex:1;min-width:0}
+  .name{font-weight:700;font-size:15.5px;line-height:1.1}
+  .name b{color:#f0c27e;letter-spacing:.6px}
+  .sub{font-size:11.5px;opacity:.85;margin-top:3px;display:flex;align-items:center;gap:5px}
+  .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;display:inline-block;animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)}70%{box-shadow:0 0 0 6px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+  .hbtn{background:none;border:none;color:#fff;opacity:.7;font-size:18px;cursor:pointer;padding:6px}
+  .hbtn:hover{opacity:1}
+  .msgs{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:9px;background:var(--bg)}
+  .row{display:flex;max-width:100%}
+  .row.bot{justify-content:flex-start}.row.user{justify-content:flex-end}.row.sys{justify-content:center}
+  .bubble{max-width:82%;padding:9px 13px;border-radius:16px;font-size:15px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px 2px rgba(0,0,0,.07)}
+  .bot .bubble{background:var(--bot);border-bottom-left-radius:5px}
+  .user .bubble{background:var(--accent);color:var(--on-accent);border-bottom-right-radius:5px}
+  .bot .bubble a{color:var(--accent-dark);font-weight:600}
+  .rtl{direction:rtl;text-align:right}
+  .typing{display:flex;gap:4px;padding:12px 14px;align-items:center}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--muted);opacity:.5;animation:blink 1.3s infinite}
+  .typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+  @keyframes blink{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .welcome{text-align:center;color:var(--muted);font-size:13px;margin:4px 0 2px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:4px}
+  .chip{border:1px solid #e3c9a3;background:#fff;color:var(--accent-dark);border-radius:18px;padding:7px 12px;font-size:13px;cursor:pointer}
+  .chip:hover{background:#fbf3e7}
+  .lead{width:92%;background:#fdf7ee;border:1.5px dashed #d8a560;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.45}
+  .lead .t{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.3px;color:var(--accent-dark);margin-bottom:6px}
+  .lead dl{display:grid;grid-template-columns:84px 1fr;gap:3px 8px;margin:0}
+  .lead dt{color:var(--muted)} .lead dd{margin:0;font-weight:600;overflow-wrap:anywhere}
+  .badge{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:800}
+  .badge.sicak{background:#ffe1d6;color:#b3330a}.badge.soguk{background:#dbeafe;color:#1d4ed8}.badge.destek{background:#e5e7eb;color:#374151}
+  .lead .f{margin-top:7px;font-size:11px;color:var(--muted)}
+  .inbar{display:flex;gap:8px;padding:10px 12px;background:var(--card);border-top:1px solid var(--line);align-items:flex-end}
+  .inbar textarea{flex:1;border:1px solid #dccfbe;border-radius:22px;padding:10px 14px;font-size:15px;resize:none;max-height:110px;font-family:inherit;outline:none;line-height:1.4}
+  .inbar textarea:focus{border-color:var(--accent)}
+  .send{width:42px;height:42px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:18px;cursor:pointer;flex:0 0 auto}
+  .send:disabled{opacity:.45;cursor:default}
+  .foot{text-align:center;font-size:10.5px;color:var(--muted);padding:5px 0 8px;background:var(--card)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="avatar">🪵</div>
+    <div class="info">
+      <div class="name"><b>TURKISH PLYWOOD</b> · Güven Demir</div>
+      <div class="sub"><span class="dot"></span> Dijital satış temsilcisi · dilinizde yanıt verir</div>
+    </div>
+    <button class="hbtn" id="resetBtn" title="Yeni sohbet">↺</button>
+  </div>
+  <div class="msgs" id="msgs"></div>
+  <div class="inbar">
+    <textarea id="inp" rows="1" placeholder="Mesajınızı yazın…"></textarea>
+    <button class="send" id="sendBtn" aria-label="Gönder">➤</button>
+  </div>
+  <div class="foot">Turkish Plywood dijital satış asistanı · demo</div>
+</div>
+
+<script>
+/* ==================== AYAR ==================== */
+const CONFIG = {
+  /* Canlı (production) webhook adresi — workflow "Turkish Plywood Demo Güven Demir" */
+  webhook: "https://n8n.closerone.ai/webhook/turkishplywood-demo-webhook/turkishplywood-demo",
+  leadKarti: true,
+  hizli: [
+    "Peraply 18 mm filmli plywood fiyatı nedir?",
+    "EKS Birch 18 mm fiyatı, 20 palet, Ankara",
+    "Segheza 18 mm film faced price, delivery to Germany",
+    "Dorse zemini için kaydırmaz plywood",
+    "Kataloğunuzu gönderir misiniz?"
+  ]
+};
+/* =============================================== */
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+function yeniId(){ return 'web-' + Date.now() + '-' + Math.random().toString(36).slice(2,8); }
+
+let konusmaId = lsGet('tp_kid');
+if(!konusmaId){ konusmaId = yeniId(); lsSet('tp_kid', konusmaId); }
+const msgs = document.getElementById('msgs'), inp = document.getElementById('inp'), sendBtn = document.getElementById('sendBtn');
+let busy = false;
+const scrollDown = () => { msgs.scrollTop = msgs.scrollHeight; };
+const isRtl = t => /[؀-ۿ]/.test(t) && !/[A-Za-zÇĞİÖŞÜçğıöşü]{4,}/.test(t.replace(/turkishplywood[^\s]*/gi,''));
+
+function fillText(el, text){
+  const re = /(https?:\/\/[^\s]+|(?:www\.)?turkishplywood\.com[^\s]*|[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,})/gi;
+  let last = 0, m;
+  while((m = re.exec(text))){
+    const parca = m[0].replace(/[.,;:!?)]+$/,'');
+    if(m.index > last) el.appendChild(document.createTextNode(text.slice(last, m.index)));
+    const a = document.createElement('a');
+    a.href = parca.includes('@') && !/^https?:/i.test(parca) ? 'mailto:' + parca : (/^https?:/i.test(parca) ? parca : 'https://' + parca.replace(/^www\./,'www.'));
+    a.target='_blank'; a.rel='noopener'; a.textContent = parca;
+    el.appendChild(a); last = m.index + parca.length; re.lastIndex = last;
+  }
+  if(last < text.length) el.appendChild(document.createTextNode(text.slice(last)));
+}
+function addBubble(text, who){
+  const row = document.createElement('div'); row.className = 'row ' + who;
+  const b = document.createElement('div'); b.className = 'bubble';
+  const clean = String(text).replace(/\*\*/g,'');
+  if(isRtl(clean)) b.classList.add('rtl');
+  if(who === 'bot') fillText(b, clean); else b.textContent = clean;
+  row.appendChild(b); msgs.appendChild(row); scrollDown();
+}
+function addChips(){
+  const w = document.createElement('div'); w.className='welcome'; w.id='welcomeRow';
+  w.textContent = 'Ürünler, ölçüler veya fiyat hakkında sorun ya da teklif isteyin.';
+  msgs.appendChild(w);
+  if(!CONFIG.hizli || !CONFIG.hizli.length) return;
+  const row = document.createElement('div'); row.className='row sys'; row.id='chipRow';
+  const box = document.createElement('div'); box.className='chips';
+  CONFIG.hizli.forEach(t => { const c=document.createElement('button'); c.className='chip'; c.textContent=t; c.onclick=()=>send(t); box.appendChild(c); });
+  row.appendChild(box); msgs.appendChild(row);
+}
+function addLeadCard(lead){
+  if(!CONFIG.leadKarti || !lead || typeof lead !== 'object') return;
+  const row = document.createElement('div'); row.className = 'row sys';
+  const box = document.createElement('div'); box.className = 'lead';
+  const t = document.createElement('div'); t.className = 't';
+  t.textContent = /DESTEK/i.test(lead.tip||'') ? '📋 Destek ekibine iletildi' : '📋 Satış ekibine iletildi';
+  box.appendChild(t);
+  const dl = document.createElement('dl');
+  [['Telefon','tel'],['Ad','ad'],['Firma','firma'],['Ülke','ulke'],['E-posta','eposta'],['Ürün','urun'],['Detay','detay'],['Miktar','miktar'],['Teslimat','teslimat'],['Ödeme','odeme'],['Zaman','zaman'],['Dil','dil'],['Müşteri','tip'],['Not','not']].forEach(([et,k])=>{
+    const v = lead[k]; if(!v) return;
+    const dt = document.createElement('dt'); dt.textContent = et;
+    const dd = document.createElement('dd');
+    if(k==='tip'){
+      const s=document.createElement('span');
+      const tip = /SICAK/i.test(v)?'sicak':/DESTEK/i.test(v)?'destek':'soguk';
+      s.className='badge '+tip; s.textContent = tip==='sicak'?'SICAK':tip==='destek'?'DESTEK':'SOĞUK';
+      dd.appendChild(s);
+    } else dd.textContent = v;
+    dl.appendChild(dt); dl.appendChild(dd);
+  });
+  box.appendChild(dl);
+  const f = document.createElement('div'); f.className='f';
+  f.textContent = 'Demo görünümü — canlı sistemde bu bilgiler CRM\'e kart olarak düşer ve satış ekibine bildirim gider.';
+  box.appendChild(f); row.appendChild(box); msgs.appendChild(row); scrollDown();
+}
+function showTyping(){ hideTyping(); const row=document.createElement('div'); row.className='row bot'; row.id='typingRow';
+  const t=document.createElement('div'); t.className='bubble typing'; t.innerHTML='<span></span><span></span><span></span>';
+  row.appendChild(t); msgs.appendChild(row); scrollDown(); }
+function hideTyping(){ const r=document.getElementById('typingRow'); if(r) r.remove(); }
+
+function renderCevap(raw, lead){
+  let s = String(raw||'').replace(/\[LEAD\][^\n\r]*/gi,'').trim();
+  /* [BÖL] ile ayrılan balonlar; en fazla 5 balon (fazlası kesilmesin diye) */
+  const bubbles = s ? s.split(/\[B[ÖO]L\]/i).map(x=>x.trim()).filter(Boolean).slice(0,5) : [];
+  let i=0;
+  (function next(){
+    if(i>=bubbles.length){ if(lead) setTimeout(()=>addLeadCard(lead), bubbles.length?500:0); return; }
+    if(i>0) showTyping();
+    setTimeout(()=>{ hideTyping(); addBubble(bubbles[i],'bot'); i++; next(); }, i===0?0:650);
+  })();
+}
+async function send(text){
+  text=(text||'').trim(); if(!text||busy) return;
+  ['chipRow','welcomeRow'].forEach(id=>{ const e=document.getElementById(id); if(e) e.remove(); });
+  busy=true; sendBtn.disabled=true; addBubble(text,'user'); inp.value=''; autoGrow(); showTyping();
+  const body = JSON.stringify({ mesaj:text, mesaj_icerigi:text, konusma_id:konusmaId, gonderen_adi:"Web Visitor" });
+  try{
+    const r = await fetch(CONFIG.webhook,{method:'POST',headers:{'Content-Type':'text/plain'},body});
+    const txt = await r.text(); hideTyping();
+    let cevap=txt, lead=null;
+    try{ const j=JSON.parse(txt); cevap=j.output||j.cevap||j.response||j.reply||j.yanit||j.mesaj||''; lead=j.lead||null; }catch(e){}
+    renderCevap(cevap, lead);
+  }catch(e){
+    hideTyping(); addBubble("Bağlantı kurulamadı. Lütfen kısa bir süre sonra tekrar deneyin ya da export@turkishplywood.com / WhatsApp +90 552 506 92 40 üzerinden bize ulaşın.",'bot');
+  }finally{ busy=false; sendBtn.disabled=false; inp.focus(); }
+}
+document.getElementById('resetBtn').onclick=()=>{ if(busy) return; konusmaId=yeniId(); lsSet('tp_kid',konusmaId); msgs.innerHTML=''; addChips(); inp.focus(); };
+function autoGrow(){ inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,110)+'px'; }
+inp.addEventListener('input',autoGrow);
+inp.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(inp.value); } });
+sendBtn.onclick=()=>send(inp.value);
+addChips();
+</script>
+</body>
+</html>
